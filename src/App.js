@@ -32,6 +32,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from "./AuthContext"
 import { MainStackNavigator } from './navigators/MainStackNavigator';
 import {AuthStackNavigator} from './navigators/AuthStackNavigator'
+import io from 'socket.io-client'
 
 const Stack = createStackNavigator()
 
@@ -112,7 +113,6 @@ const App = () => {
     })
 
   }))
-
   useEffect(() => {
     setTimeout(async() => {
       let userToken;
@@ -122,10 +122,10 @@ const App = () => {
       } catch(e) {
         console.log(e);
       }
-      dispatch({ type: 'GET_TOKEN', token: null });
+      dispatch({ type: 'GET_TOKEN', token: userToken });
     }, 2000);
   }, []);
-  
+
   if(loginState.isLoading){
     return(
       <View>
