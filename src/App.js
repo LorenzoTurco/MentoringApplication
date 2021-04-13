@@ -122,7 +122,7 @@ const App = () => {
       } catch(e) {
         console.log(e);
       }
-      dispatch({ type: 'GET_TOKEN', token: userToken });
+      dispatch({ type: 'GET_TOKEN', token: null });
     }, 2000);
   }, []);
 

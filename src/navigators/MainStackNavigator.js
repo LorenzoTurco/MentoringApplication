@@ -31,22 +31,22 @@ const Messages = [
   {
     receiverId: '1',
     receiverName: 'Jenny Doe',
-    messageTime: '4 mins ago',
-    messageText:
+    createdAt: '4 mins ago',
+    text:
       'Hey there, this is my test for a post of my social app in React Native.',
   },
   {
     receiverId: '2',
     receiverName: 'John Doe',
-    messageTime: '2 hours ago',
-    messageText:
+    createdAt: '2 hours ago',
+    text:
       'Hey there, this is my test for a post of my social app in React Native.',
   },
   {
     receiverId: '3',
     receiverName: 'Ken William',
-    messageTime: '1 hours ago',
-    messageText:
+    createdAt: '1 hours ago',
+    text:
       'Hey there, this is my test for a post of my social app in React Native.',
   },
 ];
@@ -61,6 +61,7 @@ function HomeScreen({navigation}){
     )
 }
 
+const DEFAULT_SENDER_ID = 999 // Same value in backend
 
 // const socket = io('http://10.0.2.2:4000')
 var socket = null  //connection in InboxScreen
@@ -70,26 +71,36 @@ function ChatScreen({route}){
   const [messages, setMessages] = useState([]);
   const {receiverId,receiverName,userToken} = route.params
   
-  console.log("id: " + receiverId + " name: " + receiverName + "userToken" + userToken)
+  //console.log("id: " + receiverId + " name: " + receiverName + "userToken" + userToken)
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: receiverId,
-          name: receiverName,
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ])
+    console.log(receiverId)
+    fetchContactMessages(receiverId,userToken,setMessages) 
+    // setMessages([
+    //   {
+    //     _id: 1,
+    //     text: 'Hello developer',
+    //     createdAt: new Date(),
+    //     user: {
+    //       _id: receiverId,
+    //       name: receiverName,
+    //       avatar: 'https://placeimg.com/140/140/any',
+    //     },
+    //   },
+    //   {
+    //     _id: 2,
+    //     text: 'THIS ME',
+    //     createdAt: new Date(),
+    //     user: {
+    //       _id: 9,
+    //     },
+    //   },
+    // ])
     
   }, [])
   
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-    console.log("this message was just sent!" + JSON.stringify(messages))
+    //console.log("this message was just sent!" + JSON.stringify(messages))
     //emit message.
     socket.emit("chat message",{userToken: userToken, receiverId: receiverId, message : messages });
   }, [])
@@ -100,53 +111,108 @@ function ChatScreen({route}){
       onSend={messages => onSend(messages)}
       alwaysShowSend
       scrollToBottom
+      user={{
+        _id: DEFAULT_SENDER_ID,
+      }}
     />
   )
 }
 
+function fetchInboxMessages(setMessages,userToken){
+  const options = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'auth-token' : userToken
+    },
+  }
+  fetch('http://10.0.2.2:4000/chat/latestmessages',options)
+  .then(res => res.json()
+  .then(data =>{
+      console.log(data)
+      setMessages(data.messages)
+  }))
+  .catch(function(error) {
+    console.log('There has been a problem with your fetch operation fetchInboxMessages: ' + error.message);
+      throw error;
+    });
+}
+
+function fetchContactMessages(receiverId,userToken,setMessages){
+  const options = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'auth-token' : userToken
+    },
+    body: JSON.stringify({
+      receiverId: receiverId,
+    })
+  }
+  fetch('http://10.0.2.2:4000/chat/contactmessages',options)
+  .then(res => res.json()
+  .then(data =>{
+    setMessages(data.messages)
+  }))
+  .catch(function(error) {
+    console.log('There has been a problem with your fetch operation in fetchContactMessages: ' + error.message);
+      throw error;
+    });
+}
+
+
+
 function inboxScreen({navigation}){
-  
+  const[messages,setMessages] = useState(Messages)
+  const [userToken, setUserToken] = useState("")
+
+
   useEffect(() =>{
     socket = io('http://10.0.2.2:4000')
+    if(socket){socket.on("update messages", (data)=>{
+      console.log(data)})}
+      AsyncStorage.getItem('userToken').then(token => {
+        setUserToken(token)
+        console.log(token)
+        fetchInboxMessages(setMessages,token)
+      })
+      
     return function cleanup(){
       socket.disconnect()
     }
   },[])
 
+  
+
   return(
   <View>
     <FlatList
-      data={Messages}
+      data={messages}
       keyExtractor={item => item.id}
-      renderItem={({item}) => <ChatItem item={item} navigation={navigation}/>}
+      renderItem={({item}) => <ChatItem item={item} navigation={navigation} userToken={userToken}/>}
     />
   </View>
   )
+
 }
 
-function ChatItem({item,navigation}){
-  const [userToken, setUserToken] = useState("")
-
-  useEffect(()=>{
-    AsyncStorage.getItem('userToken').then(token => setUserToken(token))
-  },[])
-
+function ChatItem({item,navigation,userToken}){
+  
   return(
     <TouchableOpacity onPress={() => navigation.navigate('Chat',{receiverName: item.receiverName, receiverId : item.receiverId, userToken : userToken })}>
      <ListItem>
       <Icon name='av-timer' />
       <ListItem.Content>
         <ListItem.Title>{item.receiverName}</ListItem.Title>
-        <ListItem.Subtitle>{item.messageText}</ListItem.Subtitle>
+        <ListItem.Subtitle>{item.text}</ListItem.Subtitle>
       </ListItem.Content>
       <ListItem.Chevron />
     </ListItem>
     </TouchableOpacity>
   )
 }
-
-
-
 
 
 var tagList = []
