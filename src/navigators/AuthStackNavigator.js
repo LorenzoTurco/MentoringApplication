@@ -4,7 +4,7 @@ import {createStackNavigator} from "@react-navigation/stack"
 import { View, Text } from "react-native"
 import { SearchBar, Input, Button} from 'react-native-elements';
 
-import HomeScreen from "../screens/HomeScreen"
+//import HomeScreen from "../screens/Home"
 import {AuthContext} from "../AuthContext"
 
 const AuthStack = createStackNavigator();
