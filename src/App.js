@@ -125,7 +125,7 @@ const App = () => {
       } catch(e) {
         console.log(e);
       }
-      dispatch({ type: 'GET_TOKEN', token: null });
+      dispatch({ type: 'GET_TOKEN', token: userToken });
     }, 2000);
   }, []);
 

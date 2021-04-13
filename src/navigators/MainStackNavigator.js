@@ -2,7 +2,7 @@ import React,{useState, useEffect,useCallback} from "react"
 
 import {createStackNavigator} from "@react-navigation/stack"
 import { View, Text, Button,StyleSheet,FlatList,TouchableOpacity} from "react-native"
-import { SearchBar, Input, ListItem, Icon, List, Avatar} from 'react-native-elements';
+import { SearchBar, Input, ListItem, Icon, List, Avatar, Image} from 'react-native-elements';
 import MenuDrawer from 'react-native-side-drawer'
 import SwipeGesture from '../SwipeGestures/swipe-gesture' 
 import { CheckBox } from 'react-native-elements'
@@ -11,14 +11,41 @@ import SearchResults from '../screens/SearchResults'
 import { GiftedChat } from 'react-native-gifted-chat'
 import io from 'socket.io-client'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { globalStyles } from '../allStyles';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+
+import HomeScreen from '../screens/Home'
+import ProfileScreen from '../screens/Profile'
+import SettingsScreen from '../screens/Settings'
+import CalendarScreen from '../screens/Calendar'
+import MentorshipsScreen from '../screens/Mentorships'
+import ContactScreen from '../screens/Contact'
+import EditProfileScreen from '../screens/EditProfile'
+import ViewProfileScreen from '../screens/ViewProfile'
+//import SearchScreen from '../screens/SearchScreen'
+
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
 
 const MainStack = createStackNavigator();
 const URLFOREMULATOR = '10.0.2.2'
 //'127.0.0.1'
 //'10.0.2.2'
 
+function LogoTitle() {
+  return (
+    <Image
+      style={{ width: 50, height: 50, }}
+      source={require('../images/fdmLogo.png')}
+    />
+  );
+}
+
+
 export function MainStackNavigator(){
-    return(
+    /*return(
         <MainStack.Navigator initialRouteName="home">
             <MainStack.Screen name="home" component={HomeScreen}/>
             <MainStack.Screen name="Search" component={SearchScreen}/>
@@ -28,8 +55,113 @@ export function MainStackNavigator(){
             })} />
 
         </MainStack.Navigator>
-    )
+    )*/
+
+  return (
+    <Tab.Navigator
+      initialRouteName="Feed"
+      tabBarOptions={{
+      activeTintColor: '#1daded',
+    }}>
+        <Tab.Screen
+          name="homeStack"
+          component={homeStack}
+          options={{
+            tabBarLabel: 'Home',
+          }}  />
+        <Tab.Screen
+          name="profileStack"
+          component={profileStack}
+          options={{
+            tabBarLabel: 'Profile',
+          }} />
+      </Tab.Navigator>
+  )
 }
+
+function homeStack() {
+  return (
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: { backgroundColor: '#1daded' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerTitle: props => <LogoTitle {...props} />,
+            headerRight: () => (
+              <View style={globalStyles.Avatar}>
+                <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                  <Image
+                    style={{ width: 35, height: 35, margin: 10, }}
+                    source={require('../images/mask.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+            ),
+        }}>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'Home' }}/>
+        <Stack.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{ title: 'Search' }}/>
+        <Stack.Screen
+          name="Inbox"
+          component={inboxScreen}
+          options={{ title: 'Inbox' }}/>
+        <Stack.Screen
+          name="Calendar"
+          component={CalendarScreen}
+          options={{ title: 'Calendar' }} />
+        <Stack.Screen
+          name="Mentorships"
+          component={MentorshipsScreen}
+          options={{ title: 'Mentorships' }} />
+        <Stack.Screen
+          name ="Chat"
+          component={ChatScreen} 
+          options={({route}) => ({
+            title: route.params.receiverName
+          })}/>
+      </Stack.Navigator>
+  );
+}
+
+function profileStack() {
+  return (
+      <Stack.Navigator
+        initialRouteName="Profile"
+        screenOptions={{
+          headerStyle: { backgroundColor: '#1daded' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' }
+        }}>
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{ title: 'Profile' }}/>
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfileScreen}
+          options={{ title: 'Edit Profile' }}/>
+        <Stack.Screen
+          name="ViewProfile"
+          component={ViewProfileScreen}
+          options={{ title: 'View Profile' }}/>
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{ title: 'Settings' }} />
+        <Stack.Screen
+          name="Contact"
+          component={ContactScreen}
+          options={{ title: 'Contact' }} />
+      </Stack.Navigator>
+  );
+}
+
 const Messages = [
   {
     receiverId: '1',
@@ -54,7 +186,7 @@ const Messages = [
   },
 ];
 
-function HomeScreen({navigation}){
+function HomeScreenNav({navigation}){
     return(
         <View>
             <Text>Home Screen, welcome back!</Text>
@@ -230,7 +362,7 @@ function fetchTags(setSelectedTags) {
         setSelectedTags(s)
       }))
       .catch(function(error) {
-        console.log('There has been a problem with your fetch operation: ' + error.message);
+        console.log('There has been a problem with your fetch operation in the fetch tags: ' + error.message);
     })
 }
 
