@@ -35,6 +35,9 @@ import {AuthStackNavigator} from './navigators/AuthStackNavigator'
 import io from 'socket.io-client'
 
 const Stack = createStackNavigator()
+const URLFOREMULATOR = '10.0.2.2'
+//'127.0.0.1'
+//'10.0.2.2'
 
 const App = () => {
   const[isLoading, setIsLoading] = React.useState(true)
@@ -90,7 +93,7 @@ const App = () => {
         })
       }
 
-      fetch('http://10.0.2.2:4000/user/signin',options)
+      fetch(`http://${URLFOREMULATOR}:4000/user/signin`,options)
       .then(res => res.text()
       .then(userToken =>{
         if(res.status == 200){

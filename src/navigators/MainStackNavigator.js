@@ -13,6 +13,9 @@ import io from 'socket.io-client'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MainStack = createStackNavigator();
+const URLFOREMULATOR = '10.0.2.2'
+//'127.0.0.1'
+//'10.0.2.2'
 
 export function MainStackNavigator(){
     return(
@@ -127,7 +130,7 @@ function fetchInboxMessages(setMessages,userToken){
       'auth-token' : userToken
     },
   }
-  fetch('http://10.0.2.2:4000/chat/latestmessages',options)
+  fetch(`http://${URLFOREMULATOR}:4000/chat/latestmessages`,options)
   .then(res => res.json()
   .then(data =>{
       console.log(data)
@@ -151,7 +154,7 @@ function fetchContactMessages(receiverId,userToken,setMessages){
       receiverId: receiverId,
     })
   }
-  fetch('http://10.0.2.2:4000/chat/contactmessages',options)
+  fetch(`http://${URLFOREMULATOR}:4000/chat/contactmessages`,options)
   .then(res => res.json()
   .then(data =>{
     setMessages(data.messages)
@@ -170,7 +173,7 @@ function inboxScreen({navigation}){
 
 
   useEffect(() =>{
-    socket = io('http://10.0.2.2:4000')
+    socket = io(`http://${URLFOREMULATOR}:4000`)
     if(socket){socket.on("update messages", (data)=>{
       console.log(data)})}
       AsyncStorage.getItem('userToken').then(token => {
@@ -218,7 +221,7 @@ function ChatItem({item,navigation,userToken}){
 var tagList = []
 
 function fetchTags(setSelectedTags) {
-  return fetch('http://10.0.2.2:4000/search/taglist')
+  return fetch(`http://${URLFOREMULATOR}:4000/search/taglist`)
       .then(res => res.json()
       .then(data =>{
         console.log(data.list.length)
@@ -321,7 +324,7 @@ function SearchScreen(){
       })
     }
 
-    fetch('http://10.0.2.2:4000/search/bytags',options)
+    fetch(`http://${URLFOREMULATOR}:4000/search/bytags`,options)
     .then(res => res.json()
     .then(data =>{
       console.log(data)
@@ -383,7 +386,7 @@ const SearchBarCustom = ({updateSearch,searchVal}) => {
 }
 
 function searchForMentorsByName(name){
-  fetch('http://10.0.2.2:4000/search/name/'+name)
+  fetch(`http://${URLFOREMULATOR}:4000/search/name/${name}`)
     .then(res => res.json()
     .then(data =>{
       setSearchResults(data.mentors)
