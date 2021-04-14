@@ -21,6 +21,7 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  Alert
 } from 'react-native';
 
 import { SearchBar, Input} from 'react-native-elements';
@@ -45,12 +46,12 @@ const App = () => {
   const[isLoading, setIsLoading] = React.useState(true)
   const[hasUserToken, setUserToken] = React.useState(false)
   const[isAuthenticated, setAuthenticated] = React.useState(false)
-
   
   const intitialLoginState = {
     isLoading: true,
     userName: null,
-    userToken: null
+    userToken: null,
+    isAdmin: false,
   }
 
   const loginReducer = (prevState,action) => {
@@ -60,20 +61,23 @@ const App = () => {
           ...prevState,
           isLoading: false,
           userToken: action.token,
+          isAdmin: action.isAdmin === null ? false : action.isAdmin
         }
       case 'SIGNIN':
         return{
           ...prevState,
           isLoading: false,
           userEmail: action.id,
-          userToken: action.token
+          userToken: action.token,
+          isAdmin: action.isAdmin
         }
       case 'SIGNOUT':
         return{
           ...prevState,
           isLoading: false,
           userEmail: null,
-          userToken: null
+          userToken: null,
+          isAdmin: false
         }
     }
   }
@@ -96,38 +100,66 @@ const App = () => {
       }
 
       fetch(`http://${URLFOREMULATOR}:4000/user/signin`,options)
-      .then(res => res.text()
-      .then(userToken =>{
+      .then(res => res.json()
+      .then(data =>{
         if(res.status == 200){
-          dispatch({type: 'SIGNIN', id: userEmail, token: userToken})
-          AsyncStorage.setItem('userToken', userToken);
+          dispatch({type: 'SIGNIN', id: userEmail, token: data.token, isAdmin: data.isAdmin})
+          try {
+            console.log(data.token)
+            AsyncStorage.setItem('userToken', data.token);
+            AsyncStorage.setItem('isAdmin', data.isAdmin.toString());
+
+          } catch (error) {
+            console.log("error in l110")
+          }
+          
         }else{
           //show error message
-          console.log(userToken)
+          Alert.alert(
+            "Incorrect Details",
+            "Message from server: " + data.msg)
         }
       }))
       .catch(function(error) {
-        console.log('There has been a problem with your fetch operation: ' + error.message);
-          throw error;
+        console.log('There has been a problem with your fetch operation: L144' + error.message);
+        throw error;
         });
     },
 
     signOut: (()=>{
       AsyncStorage.removeItem('userToken');
+      AsyncStorage.removeItem('isAdmin');
       dispatch({type: 'SIGNOUT'})
     })
 
   }))
+
   useEffect(() => {
     setTimeout(async() => {
       let userToken;
       userToken = null;
       try {
         userToken = await AsyncStorage.getItem('userToken');
-      } catch(e) {
-        console.log(e);
+        isAdmin = false
+        if(userToken){
+          isAdmin = await AsyncStorage.getItem('isAdmin')
+          isAdmin = isAdmin === "true" 
+        // const options = {
+        //   method: 'GET',
+        //   headers: {
+        //     Accept: 'application/json',
+        //     'Content-Type': 'application/json',
+        //     'auth-token' : userToken
+        //   }
+        // }
+        // isAdmin = await fetch(`http://${URLFOREMULATOR}:4000/user/isAdmin`, options)
+        // isAdmin = await isAdmin.json()
+        // isAdmin = isAdmin.msg
       }
-      dispatch({ type: 'GET_TOKEN', token: userToken });
+      } catch(e) {
+        console.log("error in signin" + e);
+      }
+      dispatch({ type: 'GET_TOKEN', token: userToken, isAdmin: isAdmin});
     }, 2000);
   }, []);
 
@@ -141,7 +173,7 @@ const App = () => {
       </View>
     )
   }
-  
+  console.log("LOGIN STATE!!!!!" + loginState.isAdmin)
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
@@ -153,7 +185,6 @@ const App = () => {
       </NavigationContainer>
     </AuthContext.Provider>
   )
-    
 }
 
 

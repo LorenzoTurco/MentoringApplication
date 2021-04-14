@@ -56,7 +56,7 @@ export function MainStackNavigator(){
 
         </MainStack.Navigator>
     )*/
-
+            
   return (
     <Tab.Navigator
       initialRouteName="Feed"
@@ -317,12 +317,15 @@ function inboxScreen({navigation}){
     socket = io(`http://${URLFOREMULATOR}:4000`)
     if(socket){socket.on("update messages", (data)=>{
       console.log(data)})}
-      AsyncStorage.getItem('userToken').then(token => {
+      try {
+        AsyncStorage.getItem('userToken').then(token => {
         setUserToken(token)
         console.log(token)
         fetchInboxMessages(setMessages,token)
       })
-      
+      } catch (error) {
+        console.log("error L327")
+      }
     return function cleanup(){
       socket.disconnect()
     }
@@ -506,10 +509,7 @@ function SearchScreen(){
       </SwipeGesture>
     </View>
   );
-    
 }
-
-
 
 const SearchBarCustom = ({updateSearch,searchVal}) => {
   return (
@@ -534,10 +534,6 @@ function searchForMentorsByName(name){
   });
 }
   
-
-
-
-
 //<Avatar source={<Icon name='av-timer'/>} /> 
 
 function iconGeneator(){

@@ -8,7 +8,13 @@ import {
   Image
 } from 'react-native';
 
-const ProfileScreen = ({ route, navigation }) => {
+import {AuthContext} from '../AuthContext'
+
+
+
+function ProfileScreen({ route, navigation }){
+  const {signOut} = React.useContext(AuthContext)
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{flex: 1, padding: 16}}>
@@ -29,10 +35,14 @@ const ProfileScreen = ({ route, navigation }) => {
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Settings')}>
                 <Text>Access Settings</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Contact')}>
-                <Text>Contact Support</Text>
+            
+            <TouchableOpacity style={styles.button} onPress={() => signOut()}>
+                <Text>Logout</Text>
             </TouchableOpacity>
+
+            {/* <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Contact')}>
+                <Text>Contact Support</Text>
+            </TouchableOpacity> */}
         </View>
         
         <Text style={{fontSize: 18, textAlign: 'center', color: 'grey'}}>
