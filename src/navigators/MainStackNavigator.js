@@ -62,6 +62,11 @@ export function MainStackNavigator(){
       initialRouteName="Feed"
       tabBarOptions={{
       activeTintColor: '#1daded',
+      labelStyle: {
+        fontSize: 15,
+        marginBottom: 10,
+        fontWeight: 'bold'
+      }
     }}>
         <Tab.Screen
           name="homeStack"
@@ -79,7 +84,7 @@ export function MainStackNavigator(){
   )
 }
 
-function homeStack() {
+function homeStack({ navigation }) {
   return (
       <Stack.Navigator
         initialRouteName="Home"
@@ -119,6 +124,10 @@ function homeStack() {
           name="Mentorships"
           component={MentorshipsScreen}
           options={{ title: 'Mentorships' }} />
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{ title: 'Profile' }} />
         <Stack.Screen
           name ="Chat"
           component={ChatScreen} 
@@ -579,21 +588,21 @@ const styles = StyleSheet.create({
   },
   animatedBox: {
     flex: 1,
-    backgroundColor: "#38C8EC",
+    backgroundColor: "#1daded",
     padding: 10
   },
   body: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F04812'
+    backgroundColor: '#1daded'
   },
   swipesGestureContainer:{
     height:'100%',
     width:'100%'
    },
   selectedTag:{
-    color: '#800080'
+    color: '#1daded'
   },
   unselectedTag:{
     color: 'black'

@@ -18,6 +18,7 @@ import {
   TextInput,
   useColorScheme,
   View,
+  Image,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
@@ -33,6 +34,7 @@ import {AuthContext} from "./AuthContext"
 import { MainStackNavigator } from './navigators/MainStackNavigator';
 import {AuthStackNavigator} from './navigators/AuthStackNavigator'
 import io from 'socket.io-client'
+import { globalStyles } from './allStyles';
 
 const Stack = createStackNavigator()
 const URLFOREMULATOR = '10.0.2.2'
@@ -131,8 +133,11 @@ const App = () => {
 
   if(loginState.isLoading){
     return(
-      <View>
-        <Text>LOADINGG</Text>
+      <View style={globalStyles.loadingScreen}>
+        <Image
+          style={{ width: 200, height: 200, justifyContent: 'center'}}
+          source={require('./images/fdmSplashScreen.png')}
+        />
       </View>
     )
   }
@@ -205,11 +210,6 @@ const styles = StyleSheet.create({
     width : '100%'
   }
 });
-
-
-
-
-
 
 
 export default App;

@@ -6,6 +6,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { globalStyles } from '../allStyles';
 
+const AppButton = ({ onPress, title }) => (
+  <TouchableOpacity onPress={onPress} style={globalStyles.appButtonContainer}>
+    <Text style={globalStyles.appButtonText}>{title}</Text>
+  </TouchableOpacity>
+);
+
 const HomeScreen = ({ navigation }) => {
     return (
       <View style={globalStyles.container}>
@@ -13,9 +19,7 @@ const HomeScreen = ({ navigation }) => {
           <Text style={globalStyles.headerTitle}>hello, user.</Text>
         </View>
 
-        <View>
-          <Button style={globalStyles.mentorButton} title="Search for Mentor" onPress={()=>{navigation.navigate('Search')}}/>
-        </View>
+        <AppButton title="Search For Mentors" size="sm" backgroundColor="#007bff" onPress={() => {navigation.navigate('Search')}} />
   
         <View style={globalStyles.boxContainer}>
           <View style={globalStyles.box}>
@@ -54,6 +58,10 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </View>
         </View>
+        <Image
+          style={{width: '50%', height: '50%', marginLeft: 200, marginTop: -120}}
+          source={require('../images/graphic1.png')}
+        />
       </View>
     )
   }
