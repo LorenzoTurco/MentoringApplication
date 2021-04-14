@@ -9,6 +9,8 @@ export const globalStyles = StyleSheet.create({
     loadingScreen: {
         flex: 1,
         backgroundColor: '#1daded',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
 
     loadingText: {
@@ -47,8 +49,8 @@ export const globalStyles = StyleSheet.create({
 
     boxContainer: {
         width: '100%',
-        height: '70%',
-        padding: 10,
+        height: '50%',
+        padding: 5,
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center'
@@ -56,7 +58,7 @@ export const globalStyles = StyleSheet.create({
 
     box: {
         width: '30%',
-        height: '30%',
+        height: '40%',
         padding: 5
     },
 
@@ -69,7 +71,8 @@ export const globalStyles = StyleSheet.create({
 
     boxTitle: {
         color: 'white',
-        fontSize: 12,
+        fontSize: 15,
+        fontWeight: 'bold'
     },
 
     animatedBox: {
@@ -84,10 +87,28 @@ export const globalStyles = StyleSheet.create({
     },
     
     selectedTag:{
-        color: '#800080'
+        color: '#1daded'
     },
 
     unselectedTag:{
         color: 'black'
-    }
+    },
+
+    appButtonContainer: {
+        elevation: 8,
+        marginBottom: 10,
+        width: 350,
+        backgroundColor: "#1daded",
+        borderRadius: 100,
+        paddingVertical: 8,
+        alignSelf: "center",
+    },
+
+    appButtonText: {
+        fontSize: 18,
+        color: "#fff",
+        fontWeight: "bold",
+        alignSelf: "center",
+        textTransform: "uppercase"
+    },
 })
