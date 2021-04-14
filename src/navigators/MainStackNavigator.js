@@ -502,10 +502,6 @@ function SearchScreen(){
 
 
 
-
-
-
-
 const SearchBarCustom = ({updateSearch,searchVal}) => {
   return (
     <SearchBar      
@@ -546,15 +542,6 @@ function iconGeneator(){
 
 
 
-
-
-
-
-
-
-
-
-
 // function drawerContent(setOpen, open) {
 //   return (
 //     <TouchableOpacity onPress={()=> {setOpen(!open)}} style={styles.animatedBox}>
@@ -574,7 +561,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 30,
     zIndex: 0
   },
   animatedBox: {
