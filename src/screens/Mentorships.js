@@ -1,43 +1,28 @@
-import * as React from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import React from "react";
 
-const MentorshipsScreen = () => {
+import { createStackNavigator } from "@react-navigation/stack";
+
+import { NavigationContainer } from "@react-navigation/native";
+
+import ViewMentorships from "../components/ViewMentorships";
+import FormPage from "../components/FormPage";
+
+const Stack = createStackNavigator();
+
+export default function MentorshipsScreen() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1 , padding: 16}}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              fontSize: 25,
-              textAlign: 'center',
-              marginBottom: 16
-            }}>
-            You are on Mentorships Screen
-          </Text>
-        </View>
-        <Text
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            color: 'grey'
-          }}>
-          FDM Mentor Matching Experience
-        </Text>
-        <Text
-          style={{
-            fontSize: 16,
-            textAlign: 'center',
-            color: 'grey'
-          }}>
-          www.fdmgroup.com
-        </Text>
-      </View>
-    </SafeAreaView>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="ViewMentorships"
+          component={ViewMentorships}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="FormPage"
+          component={FormPage}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
   );
 }
-export default MentorshipsScreen;
