@@ -3,8 +3,7 @@ import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native';
 
 const data = [
   { key: '[Employee Email]' }, { key: 'Lorem ipsum' }, { key: '[Employee Email]' }, { key: 'Lorem ipsum' }, { key: '[Employee Email]' }, { key: 'Lorem ipsum' }, { key: '[Employee Email]' }, { key: 'Lorem ipsum' }, { key: '[Employee Email]' }, { key: 'Lorem ipsum' },
-  // { key: 'K' },
-  // { key: 'L' },
+
 ];
 
 const formatData = (data, numColumns) => {
@@ -54,11 +53,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     margin: 1,
-    height: Dimensions.get('window').width / numColumns, // approximate a square
+    height: Dimensions.get('window').width / numColumns,
   },
-  itemInvisible: {
-    backgroundColor: 'transparent',
-  },
+
   itemText: {
     color: '#fff',
   },
