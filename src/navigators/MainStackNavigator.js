@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { globalStyles } from '../allStyles';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-
+//user
 import HomeScreen from '../screens/Home'
 import ProfileScreen from '../screens/Profile'
 import SettingsScreen from '../screens/Settings'
@@ -24,6 +24,10 @@ import ContactScreen from '../screens/Contact'
 import EditProfileScreen from '../screens/EditProfile'
 import ViewProfileScreen from '../screens/ViewProfile'
 //import SearchScreen from '../screens/SearchScreen'
+
+
+
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
