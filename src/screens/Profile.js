@@ -36,8 +36,8 @@ function ProfileScreen({ route, navigation }){
                 <Text>Access Settings</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.button} onPress={() => signOut()}>
-                <Text>Logout</Text>
+            <TouchableOpacity style={styles.button2} onPress={() => signOut()}>
+                <Text style={styles.buttonText}>Logout</Text>
             </TouchableOpacity>
 
             {/* <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Contact')}>
@@ -65,5 +65,21 @@ const styles = StyleSheet.create({
     width: 300,
     marginTop: 16,
   },
+
+  button2: {
+    alignItems: 'center',
+    backgroundColor: '#1daded',
+    padding: 10,
+    width: 300,
+    marginTop: 16,
+    borderRadius: 20,
+    width: '30%'
+  },
+
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 17
+  }
 });
 export default ProfileScreen;
