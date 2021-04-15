@@ -181,6 +181,7 @@ const App = () => {
           <AuthStackNavigator/>
         ): 
           <MainStackNavigator/>
+
         }
       </NavigationContainer>
     </AuthContext.Provider>

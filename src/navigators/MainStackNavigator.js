@@ -23,6 +23,7 @@ import MentorshipsScreen from '../screens/Mentorships'
 import ContactScreen from '../screens/Contact'
 import EditProfileScreen from '../screens/EditProfile'
 import ViewProfileScreen from '../screens/ViewProfile'
+import MentorProfileScreen from '../screens/MentorProfile'
 //import SearchScreen from '../screens/SearchScreen'
 
 const Tab = createBottomTabNavigator();
@@ -133,6 +134,12 @@ function homeStack({ navigation }) {
           component={ChatScreen} 
           options={({route}) => ({
             title: route.params.receiverName
+          })}/>
+        <Stack.Screen
+          name ="MentorProfile"
+          component={MentorProfileScreen} 
+          options={({route}) => ({
+            title: route.params.name
           })}/>
       </Stack.Navigator>
   );
@@ -383,7 +390,7 @@ function setSearchResults(results){
   searchResults = results
 }
 
-function SearchScreen(){
+function SearchScreen({navigation}){
     //const [searchResults, setSearchResults] = useState()
     const [search, setSearch] = useState()
     const [open, setOpen] = useState(false)
@@ -496,7 +503,7 @@ function SearchScreen(){
         opacity={0.4}
         >
         <SearchBarCustom updateSearch={handleSearch} searchVal={search}/>
-        <SearchResults searchResults={searchResults}/>
+        <SearchResults searchResults={searchResults} navigation={navigation}/>
 
         {/* <FlatList
         data = {searchResults}

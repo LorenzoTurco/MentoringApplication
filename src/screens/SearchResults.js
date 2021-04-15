@@ -7,15 +7,15 @@ const SearchResults = (props) => {
     return(
     <FlatList
     data = {props.searchResults}
-    renderItem={({item}) => <SearchItem item={item}/>}
+    renderItem={({item}) => <SearchItem item={item} navigation={props.navigation}/>}
     keyExtractor={(item) => item._id}
     />
     )  
 }
 
-const SearchItem = ({item}) => {
+const SearchItem = ({item,navigation}) => {
     return(
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('MentorProfile',{name: item.name})}>
        <ListItem>
         <Icon name='av-timer' />
         <ListItem.Content>
