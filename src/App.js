@@ -55,7 +55,9 @@ const App = () => {
     userToken: null,
     isAdmin: false,
   }
-
+  //Loginreducer and auth context were partially influenced from this youtube video: 
+  //https://www.youtube.com/watch?v=gvF6sFIPfsQ
+  
   const loginReducer = (prevState,action) => {
     switch(action.type){
       case 'GET_TOKEN':
