@@ -1,11 +1,12 @@
 import React, {useState, setState, useContext } from "react"
 
 import {createStackNavigator} from "@react-navigation/stack"
-import { View, Text } from "react-native"
+import { View, Text, TouchableOpacity } from "react-native"
 import { SearchBar, Input, Button} from 'react-native-elements';
 
 //import HomeScreen from "../screens/Home"
 import {AuthContext} from "../AuthContext"
+import { globalStyles } from "../allStyles";
 
 const AuthStack = createStackNavigator();
 
@@ -26,14 +27,16 @@ function loginScreen(){
   
     return(
       <View>
-        <Text>Login</Text>
+        <Text style={globalStyles.loginText}>Login</Text>
         <Input
-          placeholder='Email'
-          leftIcon={{ type: 'font-awesome', name: 'chevron-left' }}
+          placeholder='Enter Email'
           onChangeText={value =>setEmail(value)}
         />
-        <Input placeholder="Password" secureTextEntry={true} onChangeText={value =>{setPassword(value)}}/>
-        <Button onPress={() => signIn(email,password)} ></Button>
+        <Input placeholder="Enter Password" secureTextEntry={true} onChangeText={value =>{setPassword(value)}}/>
+
+        <TouchableOpacity style={globalStyles.loginButton} onPress={() => signIn(email,password)}>
+          <Text style={globalStyles.appButtonText}>Sign In</Text>
+        </TouchableOpacity>
       </View>
     )
 }

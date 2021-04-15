@@ -111,4 +111,22 @@ export const globalStyles = StyleSheet.create({
         alignSelf: "center",
         textTransform: "uppercase"
     },
+
+    loginText: {
+        fontWeight: "bold",
+        alignSelf: "center",
+        textTransform: "uppercase",
+        fontSize: 20,
+        marginTop: 20
+    },
+
+    loginButton: {
+        elevation: 8,
+        marginBottom: 10,
+        width: '30%',
+        backgroundColor: "#1daded",
+        borderRadius: 100,
+        paddingVertical: 8,
+        alignSelf: "center",
+    }
 })

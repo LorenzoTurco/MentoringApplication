@@ -34,8 +34,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from "./AuthContext"
 import { MainStackNavigator } from './navigators/MainStackNavigator';
 import {AuthStackNavigator} from './navigators/AuthStackNavigator'
+import {AdminNavigator} from './navigators/AdminNavigator.js'
 import io from 'socket.io-client'
 import { globalStyles } from './allStyles';
+import profileStack from './navigators/MainStackNavigator';
 
 const Stack = createStackNavigator()
 const URLFOREMULATOR = '10.0.2.2'
@@ -180,8 +182,9 @@ const App = () => {
         {loginState.userToken === null ? (
           <AuthStackNavigator/>
         ): 
-          <MainStackNavigator/>
-
+          loginState.isAdmin ?
+          <AdminNavigator/> : //Admin UI
+          <MainStackNavigator/> //User UI
         }
       </NavigationContainer>
     </AuthContext.Provider>
