@@ -30,7 +30,7 @@ function fetchDataGET() {
     });
 }
 
-let x = fetchDataGET();
+//let x = fetchDataGET();
 
 function fetchData() {
   //POST EXAMPLE
@@ -57,7 +57,7 @@ function fetchData() {
     });
 }
 
-let y = fetchData();
+//let y = fetchData();
 
 var arrayOfEvents = [
   // should be equal to database objects

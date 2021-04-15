@@ -149,6 +149,17 @@ function homeStack({ navigation }) {
   );
 }
 
+//import Home from ".";
+//import Details from "./components/Details";
+//import ViewProfile from "./components/ViewMentorProfile";
+//import ViewOwnProfile from "../screens/profileMisc/;
+import EditOwnProfile from "../screens/profileMisc/EditOwnProfile";
+import EditExperience from "../screens/profileMisc/EditExperience";
+import AddNewExperience from "../screens/profileMisc/AddNewExperience";
+import EditAboutMe from "../screens/profileMisc/EditAboutMe";
+import EditTags from "../screens/profileMisc/EditTags";
+import AddNewTag from "../screens/profileMisc/AddNewTag";
+
 function profileStack() {
   return (
       <Stack.Navigator
@@ -178,6 +189,18 @@ function profileStack() {
           name="Contact"
           component={ContactScreen}
           options={{ title: 'Contact' }} />
+      
+      <Stack.Screen name  = "EditOwnProfile" component={EditOwnProfile} />
+      <Stack.Screen name  = "EditExperience" component={EditExperience} />
+      <Stack.Screen name  = "AddNewExperience" component={AddNewExperience} />
+      <Stack.Screen name  = "EditAboutMe" component={EditAboutMe} />
+      <Stack.Screen name  = "EditTags" component={EditTags} />
+      <Stack.Screen name  = "AddNewTag" component={AddNewTag} />
+
+    
+
+
+
       </Stack.Navigator>
   );
 }
@@ -185,24 +208,24 @@ function profileStack() {
 const Messages = [
   {
     receiverId: '1',
-    receiverName: 'Jenny Doe',
+    receiverName: 'Jennifer Kaegan',
     createdAt: '4 mins ago',
     text:
-      'Hey there, this is my test for a post of my social app in React Native.',
+      'Hey John, how was the event? Sorry I could not come.'
   },
   {
     receiverId: '2',
-    receiverName: 'John Doe',
+    receiverName: 'Alex McNeil',
     createdAt: '2 hours ago',
     text:
-      'Hey there, this is my test for a post of my social app in React Native.',
+      'Awesome, the presentation went really well - cannot wait for Monday!',
   },
   {
     receiverId: '3',
     receiverName: 'Ken William',
     createdAt: '1 hours ago',
     text:
-      'Hey there, this is my test for a post of my social app in React Native.',
+      'When should we have our next meeting John? ',
   },
 ];
 
@@ -229,27 +252,43 @@ function ChatScreen({route}){
   //console.log("id: " + receiverId + " name: " + receiverName + "userToken" + userToken)
   useEffect(() => {
     console.log(receiverId)
-    fetchContactMessages(receiverId,userToken,setMessages) 
-    // setMessages([
-    //   {
-    //     _id: 1,
-    //     text: 'Hello developer',
-    //     createdAt: new Date(),
-    //     user: {
-    //       _id: receiverId,
-    //       name: receiverName,
-    //       avatar: 'https://placeimg.com/140/140/any',
-    //     },
-    //   },
-    //   {
-    //     _id: 2,
-    //     text: 'THIS ME',
-    //     createdAt: new Date(),
-    //     user: {
-    //       _id: 9,
-    //     },
-    //   },
-    // ])
+    //fetchContactMessages(receiverId,userToken,setMessages) 
+    setMessages([
+      {
+        _id: 1,
+        text: 'How was the meeting then?',
+        createdAt: "8:46pm",
+        user: {
+          _id: 1,
+          name: receiverName,
+        },
+      },
+      {
+        _id: 2,
+        text: 'did it go as planned',
+        createdAt: "8:46",
+        user: {
+          _id: 1,
+        },
+      },
+     {
+        _id: 3,
+        text: 'Went well',
+        createdAt: "8:50pm",
+        user: {
+          _id: 999,
+        },
+      },
+      {
+        _id: 4,
+        text: 'When should we have our next meeting John?',
+        createdAt: "9:00pm",
+        user: {
+          _id: 999,
+        },
+      },
+
+  ])
     
   }, [])
   
@@ -332,7 +371,7 @@ function inboxScreen({navigation}){
         AsyncStorage.getItem('userToken').then(token => {
         setUserToken(token)
         console.log(token)
-        fetchInboxMessages(setMessages,token)
+        //fetchInboxMessages(setMessages,token)
       })
       } catch (error) {
         console.log("error L327")
@@ -341,8 +380,6 @@ function inboxScreen({navigation}){
       socket.disconnect()
     }
   },[])
-
-  
 
   return(
   <View>
@@ -353,11 +390,9 @@ function inboxScreen({navigation}){
     />
   </View>
   )
-
 }
 
 function ChatItem({item,navigation,userToken}){
-  
   return(
     <TouchableOpacity onPress={() => navigation.navigate('Chat',{receiverName: item.receiverName, receiverId : item.receiverId, userToken : userToken })}>
      <ListItem>

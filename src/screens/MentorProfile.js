@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 16,
         fontWeight: "bold",
-        paddingLeft: 170
+        paddingLeft: 140
     },
 
     header: {
@@ -241,7 +241,87 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
 });
+const userData = [{
+    id: 0,
+    name: "Poppy Ward",
+    //avatar: require("./avator.jpg"),
 
+    aboutMe: "About ME:"+
+    "A business consultant with passion and interest in data transformation techniques."+
+    "Studied at Queen Mary University of London with a degree in Business Management. I have exceptional communication,"+
+    "technical, leadership and analytical skills. Along with my strong business background, I possess business-oriented"+
+    "digital skills as well as a commercial experience in research, management consultancy and administration.",
+
+    exp:
+    [
+    {id: 0,
+    title: "Business Consultant",
+    monthFrom: "Mar" ,
+    monthTo: "Apr",
+    fromYr: "2017",
+    toYr: "2021",
+    desc: "Led team of 15 people in 20+ projects in London and Sydney",},
+
+     {id: 1,
+        monthFrom: "Oct" ,
+        monthTo: "Nov",
+     title: "Talent Accelerator and Consultant",
+     fromYr: "2016",
+     toYr: "2017",
+     desc: "Hosted events for graduates and entry-level participants in a consulting start-up"},
+
+     {id: 2,
+     title: "Research Consultant",
+     monthFrom: "Apr" ,
+     monthTo: "Mar",
+     fromYr: "2015",
+     toYr: "2016",
+     desc: "Performed in-depth global market research to identify relevant companies and high-calibre professionals"},
+
+     {id: 3,
+     title: "Santander Intern",
+     monthFrom: "Jan" ,
+     monthTo: "Feb",
+     fromYr: "2015",
+     toYr: "2015",
+     desc: "Played a key role in completing multiple business projects."},
+
+     {id: 4,
+        title: "Market Research Interviewer",
+        monthFrom: "Oct" ,
+        monthTo: "Dec",
+        fromYr: "2013",
+        toYr: "2015",
+        desc: "Utilised effective communication, organisational and time management skills to interview people from different backgrounds",},
+
+         {id: 5,
+            monthFrom: "Oct" ,
+            monthTo: "Nov",
+         title: "Consultant Intern at the Bright Network",
+         fromYr: "2011",
+         toYr: "2013",
+         desc: "Learned core consulting skills from industry experts (Accenture, Alpha FMC, PwC and Elixirr)"},
+
+         {id: 6,
+         title: "Usability Tester",
+         monthFrom: "Apr" ,
+         monthTo: "Mar",
+         fromYr: "2010",
+         toYr: "2010",
+         desc: "Performed analytical tests of various websites for their technical issues and generated detailed bug test reports."},
+
+         {id: 7,
+         title: "Executive Assistant",
+         monthFrom: "Jan" ,
+         monthTo: "Feb",
+         fromYr: "2009",
+         toYr: "2010",
+         desc: "Provided administrative support including diary, bookings, inbox, finances and digital media engagement"},
+
+    ],
+
+}]
+/*
 const userData = [{
     id: 0,
     name: "john",
@@ -329,4 +409,4 @@ const userData = [{
     ],
 
 }]
-
+*/
